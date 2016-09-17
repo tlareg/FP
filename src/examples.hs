@@ -1,7 +1,7 @@
 -- install Haskell Platform https://www.haskell.org/platform/
 
 -- https://wiki.haskell.org/Tutorials
--- http://learnyouahaskell.com/chapters
+  -- http://learnyouahaskell.com/chapters
 
 -- run GHC interactive from command line: ghci
 
@@ -65,9 +65,6 @@ listExample = do
   putStrLn "My list reversed:"
   print (reverse myList)
 
-  putStrLn "My list reversed:"
-  print (reverse myList)
-
   putStrLn "is 6 element of my list?"
   print (6 `elem` myList)
 
@@ -84,7 +81,7 @@ listExample = do
   -- make list of doubled numbers from 1 to 10
   print ([x*2 | x <- [1..10]] )
 
-  -- with condition (predicate, we can use many of them after comma)
+  -- with condition (or predicate, we can use many of them after comma)
   print ([x*2 | x <- [1..10], x*2 >= 12] )
 
   -- function that takes list xs, 
@@ -129,3 +126,12 @@ sayMe 3 = "Three!"
 sayMe 4 = "Four!"  
 sayMe 5 = "Five!"  
 sayMe x = "Not between 1 and 5" 
+
+factorial :: (Integral a) => a -> a  
+factorial 0 = 1  
+factorial n = n * factorial (n - 1)
+
+fibonacci :: (Integral a) => a -> a
+fibonacci 0 = 0
+fibonacci 1 = 1
+fibonacci n = fibonacci (n-1) + fibonacci (n-2)
