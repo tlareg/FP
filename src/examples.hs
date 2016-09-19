@@ -118,8 +118,7 @@ removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
 addThree :: Int -> Int -> Int -> Int  
 addThree x y z = x + y + z  
 
--- pattern matching (like switch)
--- (Integral is typeclass - sth like java interface)
+-- pattern matching
 sayMe :: (Integral a) => a -> String  
 sayMe 1 = "One!"  
 sayMe 2 = "Two!"  
@@ -136,3 +135,28 @@ fibonacci :: (Integral a) => a -> a
 fibonacci 0 = 0
 fibonacci 1 = 1
 fibonacci n = fibonacci (n-1) + fibonacci (n-2)
+
+third :: (a, b, c) -> c
+third (_, _, z) = z
+
+sum' :: (Num a) => [a] -> a
+sum' [] = 0
+sum' (x:xs) = x + sum' xs
+
+zip' :: [a] -> [b] -> [(b, a)]
+zip' _ [] = []
+zip' [] _ = []
+zip' (a:aa) (b:bb) = (b, a): zip' aa bb
+
+map' :: (a -> b) -> [a] -> [b]  
+map' _ [] = []  
+map' f (x:xs) = f x : map f xs
+
+filter' :: (a -> Bool) -> [a] -> [a]
+filter' _ [] = []
+filter' predicateFn (x:xs)
+  | predicateFn x = x : filter' predicateFn xs 
+  | otherwise = filter' predicateFn xs
+
+filter'' :: (a -> Bool) -> [a] -> [a]  
+filter'' p = foldr (\x acc -> if p x then x : acc else acc) []  
