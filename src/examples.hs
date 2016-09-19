@@ -1,6 +1,7 @@
 -- install Haskell Platform https://www.haskell.org/platform/
 
 -- https://wiki.haskell.org/Tutorials
+  -- https://learnxinyminutes.com/docs/haskell/
   -- http://learnyouahaskell.com/chapters
 
 -- run GHC interactive from command line: ghci
