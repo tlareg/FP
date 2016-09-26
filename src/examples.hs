@@ -7,7 +7,6 @@
   -- http://book.realworldhaskell.org/read/
 
   -- https://learnxinyminutes.com/docs/haskell/
-  -- https://wiki.haskell.org/99_questions/1_to_10
 
 
 -- run GHC interactive from command line: ghci
