@@ -8,13 +8,27 @@
 
   -- https://learnxinyminutes.com/docs/haskell/
 
+  -- Krishna Haskell Tutorial
+  -- https://www.youtube.com/playlist?list=PLwiOlW12BuPZUxA2gISnWV32mp26gNq56
 
--- run GHC interactive from command line: ghci
+  -- LazyCast Haskell Tutorial
+  -- https://www.youtube.com/playlist?list=PLvj5k87ljYYHwOOcdGvS3qi85IvjOW--8
 
--- load functions from examples.hs by :l examples
--- reload file by :r
--- load modules with :m + Data.list Data.Map Data.Set
--- check type :t valueToCheck
+
+-- run GHC interactive from command line
+-- $ ghci
+
+-- load functions from examples.hs by
+-- $ :l examples
+
+-- reload file by
+-- $ :r
+
+-- load modules with
+-- $ :m + Data.list Data.Map Data.Set
+
+-- check type by
+-- $ :t valueToCheck
 
 
 
@@ -22,6 +36,7 @@
 import Data.List
 
 -- function
+main :: IO()
 main = do
 
   -- string concatenation
@@ -36,9 +51,9 @@ main = do
 printHello = putStrLn "Hello"
 mySumFn a b = a + b
 squareMe x = x * x
-doubleSmallNumber x = if x > 100  
-                        then x  
-                        else x*2   
+doubleSmallNumber x = if x > 100
+                        then x
+                        else x*2
 
 nestedFnExample = do
   let myMul a b = a * b
@@ -53,32 +68,23 @@ nestedFnExample = do
 listExample = do
 
   let myList = [1 ,2 ,3, 4, 5, 6]
-  
-  putStrLn "my list is: " 
+
+  putStrLn "my list is: "
   print myList
 
-  putStrLn "Second element of my list is:"
   print (myList !! 1)
-
-  putStrLn "My list head is first element of list:"
   print (head myList)
-
-  putStrLn "My list tail is list without head:"
   print (tail myList)
-
-  putStrLn "Last element:"
   print (last myList)
 
   putStrLn "Everything except last element:"
   print (init myList)
 
-  putStrLn "List length:"
   print (length myList)
 
   putStrLn "Is my list empty?"
   print (null myList)
 
-  putStrLn "My list reversed:"
   print (reverse myList)
 
   putStrLn "is 6 element of my list?"
@@ -117,16 +123,16 @@ tuplesExample = do
 --------------------------------------
 
 listCompExample = do
-  
+
   -- make list of doubled numbers from 1 to 10
   print ([x*2 | x <- [1..10]] )
 
   -- with condition (or predicate, we can use many of them after comma)
   print ([x*2 | x <- [1..10], x*2 >= 12] )
 
-  -- function that takes list xs, 
+  -- function that takes list xs,
   -- filter odd numbers and map it to boom if greater than 10 or to bang
-  let boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]  
+  let boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
   print (boomBangs [8, 9, 11, 12])
 
   -- which right triangle that has integers for all sides
@@ -137,28 +143,28 @@ listCompExample = do
 
 
 --------------------------------------
--- FUNCTIONS
+-- FUNCTION SYNTAX
 --------------------------------------
 
 -- function with type declaration
-removeNonUppercase :: [Char] -> [Char]  
-removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']] 
+removeNonUppercase :: [Char] -> [Char]
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
 
 -- 3 parameters and return type
-addThree :: Int -> Int -> Int -> Int  
-addThree x y z = x + y + z  
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
 
 -- guard patterns
-sayMe :: (Integral a) => a -> String  
-sayMe 1 = "One!"  
-sayMe 2 = "Two!"  
-sayMe 3 = "Three!"  
-sayMe 4 = "Four!"  
-sayMe 5 = "Five!"  
-sayMe x = "Not between 1 and 5" 
+sayMe :: (Integral a) => a -> String
+sayMe 1 = "One!"
+sayMe 2 = "Two!"
+sayMe 3 = "Three!"
+sayMe 4 = "Four!"
+sayMe 5 = "Five!"
+sayMe x = "Not between 1 and 5"
 
-factorial :: (Integral a) => a -> a  
-factorial 0 = 1  
+factorial :: (Integral a) => a -> a
+factorial 0 = 1
 factorial n = n * factorial (n - 1)
 
 fibonacci :: (Integral a) => a -> a
@@ -184,18 +190,18 @@ zip' (a:aa) (b:bb) = (b, a): zip' aa bb
 -- HIGH ORDER FUNCTIONS
 --------------------------------------
 
-map' :: (a -> b) -> [a] -> [b]  
-map' _ [] = []  
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
 map' f (x:xs) = f x : map f xs
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
 filter' predicateFn (x:xs)
-  | predicateFn x = x : filter' predicateFn xs 
+  | predicateFn x = x : filter' predicateFn xs
   | otherwise = filter' predicateFn xs
 
-filter'' :: (a -> Bool) -> [a] -> [a]  
-filter'' p = foldr (\x acc -> if p x then x : acc else acc) []  
+filter'' :: (a -> Bool) -> [a] -> [a]
+filter'' p = foldr (\x acc -> if p x then x : acc else acc) []
 
 -- fuctions composition with "."
 dictGetValByKey dict key = snd . head $ filter (\(k, v) -> k == key) dict
@@ -203,8 +209,22 @@ dictGetValByKey dict key = snd . head $ filter (\(k, v) -> k == key) dict
 
 
 --------------------------------------
--- CUSTOM TYPES
+-- TYPES
 --------------------------------------
+
+-- check type by
+-- $ :t valueToCheck
+
+-- Types are sets of values
+-- Typeclasses are sets of types
+
+-- Haskell: Typeclass <-- Type <-- Value
+-- Java: Interface <-- Class <-- Object
+
+-- explicite type annotation
+-- 3 :: Double
+
+
 
 data Person = Person { firstName :: String, lastName :: String } deriving (Show)
 
