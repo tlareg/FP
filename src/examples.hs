@@ -175,8 +175,11 @@ fibonacci n = fibonacci (n-1) + fibonacci (n-2)
 third :: (a, b, c) -> c
 third (_, _, z) = z
 
+-- recursive function
 sum' :: (Num a) => [a] -> a
+-- base case
 sum' [] = 0
+-- recursive case
 sum' (x:xs) = x + sum' xs
 
 zip' :: [a] -> [b] -> [(b, a)]
@@ -184,7 +187,14 @@ zip' _ [] = []
 zip' [] _ = []
 zip' (a:aa) (b:bb) = (b, a): zip' aa bb
 
+-- function application
+-- ($) :: (a -> b) -> a -> b
+-- f g z x is like (((f g) z) x)
+-- f $ g $ z x is like (f (g (z x)))
 
+-- function composition
+-- (.) :: (b -> c) -> (a -> b) -> a -> c
+-- f . g = \x -> f (g x)
 
 --------------------------------------
 -- HIGH ORDER FUNCTIONS
@@ -203,7 +213,6 @@ filter' predicateFn (x:xs)
 filter'' :: (a -> Bool) -> [a] -> [a]
 filter'' p = foldr (\x acc -> if p x then x : acc else acc) []
 
--- fuctions composition with "."
 dictGetValByKey dict key = snd . head $ filter (\(k, v) -> k == key) dict
 
 
@@ -225,12 +234,38 @@ dictGetValByKey dict key = snd . head $ filter (\(k, v) -> k == key) dict
 -- 3 :: Double
 
 
+data SimplePerson = SimplePerson String String deriving (Show)
 
-data Person = Person { firstName :: String, lastName :: String } deriving (Show)
+spFirstName :: SimplePerson -> String
+spFirstName (SimplePerson firstName _) = firstName
+
+spSecondName :: SimplePerson -> String
+spSecondName (SimplePerson _ secondName) = secondName
+
+simplePersonExample = do
+  let person = SimplePerson "Jan" "Kowalski"
+  print person
+  print $ spFirstName person
+  print $ spSecondName person
+
+
+data Person = Person { firstName :: String
+                     , lastName :: String } deriving (Show)
 
 introducePerson :: Person -> IO()
 introducePerson p = putStrLn $ "Hi, I'am " ++ firstName p ++ " " ++ lastName p
 
-introduceExample = do
+recordExample = do
   let dude = Person "Jan" "Kowalski"
   introducePerson dude
+
+
+over9000 :: (Num a, Ord a) => a -> Maybe a
+over9000 a
+  | a > 9000  = Just a
+  | otherwise = Nothing
+
+isStrong :: (Num a, Ord a) => a -> Bool
+isStrong a = case over9000 a of
+  Nothing  -> False
+  Just val -> True
