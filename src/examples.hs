@@ -260,12 +260,39 @@ recordExample = do
   introducePerson dude
 
 
-over9000 :: (Num a, Ord a) => a -> Maybe a
-over9000 a
-  | a > 9000  = Just a
-  | otherwise = Nothing
 
-isStrong :: (Num a, Ord a) => a -> Bool
-isStrong a = case over9000 a of
+type StrengthUnits = Int
+type Warriors = [Warrior]
+data Warrior = Sayan { name :: String
+                     , strength :: StrengthUnits}
+             | Human { name :: String
+                     , strength :: StrengthUnits}
+             deriving(Show)
+
+warriorExample = do
+  let vegeta = Sayan { name = "Vegeta", strength = 9001 }
+  let kuririn = Human "Kuririn" 5000
+  let warriors = [vegeta, kuririn]
+  printWarriors warriors
+  putStrLn $ "Is " ++ name vegeta ++ " strong?"
+  putStrLn . show . isStrong $ vegeta
+
+printWarriors :: Warriors -> IO ()
+printWarriors = mapM_ printWarriorStats
+
+printWarriorStats :: Warrior -> IO ()
+printWarriorStats = putStrLn . getWarriorStats
+
+getWarriorStats :: Warrior -> String
+getWarriorStats w = "Name: " ++ name w ++
+                    ", Strength: " ++ (show . strength $ w)
+
+isStrong :: Warrior -> Bool
+isStrong w = case over9000 . strength $ w of
   Nothing  -> False
   Just val -> True
+
+over9000 :: StrengthUnits -> Maybe StrengthUnits
+over9000 s
+  | s > 9000  = Just s
+  | otherwise = Nothing
