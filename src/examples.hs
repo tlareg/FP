@@ -263,11 +263,13 @@ recordExample = do
 
 type StrengthUnits = Int
 type Warriors = [Warrior]
-data Warrior = Sayan { name :: String
-                     , strength :: StrengthUnits}
-             | Human { name :: String
-                     , strength :: StrengthUnits}
-             deriving(Show)
+data Warrior =
+  Sayan
+  { name     :: String
+  , strength :: StrengthUnits } |
+  Human
+  { name     :: String
+  , strength :: StrengthUnits } deriving(Show)
 
 warriorExample = do
   let vegeta = Sayan { name = "Vegeta", strength = 9001 }
@@ -289,10 +291,35 @@ getWarriorStats w = "Name: " ++ name w ++
 
 isStrong :: Warrior -> Bool
 isStrong w = case over9000 . strength $ w of
-  Nothing  -> False
   Just val -> True
+  Nothing  -> False
 
 over9000 :: StrengthUnits -> Maybe StrengthUnits
 over9000 s
   | s > 9000  = Just s
   | otherwise = Nothing
+
+
+
+
+newtype CustomerId = MakeCustomerId Int deriving (Show)
+
+customerIdToInt :: CustomerId -> Int
+customerIdToInt (MakeCustomerId i) = i
+
+data Customer = MakeCustomer
+  { customerId   :: CustomerId
+  , customerName :: String
+  , luckyNumber  :: Int
+  }
+
+customerExample :: IO ()
+customerExample = do
+  let henio = MakeCustomer
+              { customerId = MakeCustomerId 1
+              , customerName = "Henio"
+              , luckyNumber = 7
+              }
+  putStrLn $ customerName $ henio
+  putStrLn $ show $ customerId $ henio
+  putStrLn $ show $ customerIdToInt $ customerId $ henio
