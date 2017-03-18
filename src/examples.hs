@@ -14,28 +14,44 @@
   -- LazyCast Haskell Tutorial
   -- https://www.youtube.com/playlist?list=PLvj5k87ljYYHwOOcdGvS3qi85IvjOW--8
 
+  -- Pluralsight Haskell Fundamentals
+  -- https://app.pluralsight.com/library/courses/haskell-fundamentals-part1
 
--- run GHC interactive from command line
+-- compile - create executable
+-- $ ghc hello-world.hs
+
+-- GHC interactive
 -- $ ghci
 
--- load functions from examples.hs by
--- $ :l examples
+  -- load functions from examples.hs by
+  -- $ :l examples
 
--- reload file by
--- $ :r
+  -- reload file by
+  -- $ :r
 
--- load modules with
--- $ :m + Data.list Data.Map Data.Set
+  -- load modules with
+  -- $ :m + Data.list Data.Map Data.Set
 
--- check type by
--- $ :t valueToCheck
-
-
+  -- check type by
+  -- $ :t valueToCheck
 
 
 import Data.List
 
--- function
+-- qualified import
+-- import qualified Data.Sequence as Seq
+-- :t empty - not in scope
+-- :t Seq.empty - Seq.empty :: Seq.Seq a
+
+-- explicit import
+-- import Data.Set (empty, size)
+
+-- hiding imports
+-- import Data.Set hiding (empty, size)
+
+-- Type class instances ingnore any explicit import list, automatically imported with the module
+
+
 main :: IO()
 main = do
 
@@ -323,3 +339,88 @@ customerExample = do
   putStrLn $ customerName $ henio
   putStrLn $ show $ customerId $ henio
   putStrLn $ show $ customerIdToInt $ customerId $ henio
+  putStrLn $ "Lucky number: " ++ (show . luckyNumber $ henio)
+
+
+
+
+rgbExample :: IO ()
+rgbExample = do
+    putStrLn $ show $ greenInColors
+
+-- algebraic data type
+data RGB = RGB Int Int Int
+
+-- typeclass
+-- class Eq a where
+--   (==) :: a -> a -> Bool
+--   (/=) :: a -> a -> Bool
+
+-- typeclass instance
+instance Eq RGB where
+  -- function (==) implementation
+  (RGB r1 g1 b1) == (RGB r2 g2 b2) =
+    (r1 == r2) && (g1 == g2) && (b1 == b2)
+
+instance Show RGB where
+  show (RGB r g b) =
+    "RGB " ++ (show r) ++ " " ++  (show g) ++ " " ++ (show b)
+
+colors :: [RGB]
+colors = [RGB 255 0 0, RGB 0 255 0, RGB 0 0 255]
+
+green :: RGB
+green = RGB 0 255 0
+
+-- elem :: Eq a => a -> [a] -> Bool
+greenInColors :: Bool
+greenInColors = elem green colors
+
+
+
+-- () is Unit type
+-- data IO a - parametrized type
+
+ioExample :: IO ()
+ioExample = do
+  -- getLine :: IO String
+  line <- getLine
+  putStrLn $ "You typed: " ++ line
+  line <- dummyGetLine
+  putStrLn line
+
+-- return :: a -> IO a
+dummyGetLine :: IO String
+dummyGetLine =
+  return "aaa"
+
+
+
+-- Monad Examples:
+-- * IO
+-- * List
+-- * Maybe
+
+-- class Monad m where
+--  return :: a -> m a
+--  (>>=)  :: ma -> (a -> m b) -> m b
+
+-- do-Notation
+--
+-- addM :: Monad m => m Int -> m Int -> m Int
+-- addM mx my =
+--   mx >>= (\x -> my >>= (\y -> return (x + y)))
+--
+-- addM' = do
+--   x <- mx
+--   y <- my
+--   return (x + y)
+
+-- const addM = (mx, my) =>
+--   mx.then(x => my.then(y => x + y))
+
+-- async function addM(mx, my) {
+--   const x = await mx
+--   const y = await my
+--   return x + y
+-- }
