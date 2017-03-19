@@ -23,8 +23,8 @@
 -- GHC interactive
 -- $ ghci
 
-  -- load functions from examples.hs by
-  -- $ :l examples
+  -- load functions from haskell_examples.hs by
+  -- $ :l haskell_examples
 
   -- reload file by
   -- $ :r
