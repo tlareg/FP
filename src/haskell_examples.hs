@@ -35,6 +35,13 @@
   -- check type by
   -- $ :t valueToCheck
 
+  -- check info
+  -- $ :i sth
+
+  -- check kind (types are the labels of values and kinds are the labels of types)
+  -- $ :k SomeType
+
+
 
 import Data.List
 
@@ -378,6 +385,30 @@ greenInColors = elem green colors
 
 
 
+class StupidShowable a where
+  stupidShow :: a -> String
+
+instance StupidShowable Bool where
+  stupidShow False = "I think this is true"
+  stupidShow True  = "I think this is false"
+
+instance StupidShowable Int where
+  stupidShow i = "You gave me: " ++ show (i + 1)
+
+instance StupidShowable (Maybe a) where
+  stupidShow Nothing  = "There is something"
+  stupidShow (Just _) = "There is nothing"
+
+customTypeclassExample :: IO ()
+customTypeclassExample = do
+  putStrLn $ stupidShow False
+  putStrLn $ stupidShow (3 :: Int)
+  putStrLn $ stupidShow $ Just 3
+
+
+
+
+
 -- () is Unit type
 -- data IO a - parametrized type
 
@@ -396,14 +427,22 @@ dummyGetLine =
 
 
 
--- Monad Examples:
--- * IO
--- * List
--- * Maybe
+-- class Functor f where
+--   fmap :: (a -> b) -> f a -> f b
+
+-- instance Functor Maybe
+--   fmap f (Just x) = Just (f x)
+--   fmap Nothing    = Nothing
+
 
 -- class Monad m where
 --  return :: a -> m a
 --  (>>=)  :: ma -> (a -> m b) -> m b
+
+-- Monad Examples:
+-- * IO
+-- * List
+-- * Maybe
 
 -- do-Notation
 --
@@ -411,7 +450,7 @@ dummyGetLine =
 -- addM mx my =
 --   mx >>= (\x -> my >>= (\y -> return (x + y)))
 --
--- addM' = do
+-- addM' mx my = do
 --   x <- mx
 --   y <- my
 --   return (x + y)
@@ -424,3 +463,9 @@ dummyGetLine =
 --   const y = await my
 --   return x + y
 -- }
+
+
+
+
+
+
