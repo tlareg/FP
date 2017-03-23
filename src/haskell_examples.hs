@@ -409,7 +409,7 @@ customTypeclassExample = do
 
 
 
--- () is Unit type
+-- () is unit (empty tuple)
 -- data IO a - parametrized type
 
 ioExample :: IO ()
