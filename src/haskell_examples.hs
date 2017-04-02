@@ -289,10 +289,12 @@ type Warriors = [Warrior]
 data Warrior =
   Sayan
   { name     :: String
-  , strength :: StrengthUnits } |
+  , strength :: StrengthUnits
+  } |
   Human
   { name     :: String
-  , strength :: StrengthUnits } deriving(Show)
+  , strength :: StrengthUnits
+  } deriving(Show)
 
 warriorExample = do
   let vegeta = Sayan { name = "Vegeta", strength = 9001 }
@@ -435,9 +437,16 @@ dummyGetLine =
 --   fmap Nothing    = Nothing
 
 
--- class Monad m where
+-- class Functor f => Applicative f where
+--     -- | Lift a value.
+--     pure :: a -> f a
+--     -- | Sequential application.
+--     (<*>) :: f (a -> b) -> f a -> f b
+
+
+-- class Applicative m => Monad m where
 --  return :: a -> m a
---  (>>=)  :: ma -> (a -> m b) -> m b
+--  (>>=)  :: m a -> (a -> m b) -> m b
 
 -- Monad Examples:
 -- * IO
@@ -455,9 +464,11 @@ dummyGetLine =
 --   y <- my
 --   return (x + y)
 
+-- do-Notation is similar to JS async/await
+--
 -- const addM = (mx, my) =>
 --   mx.then(x => my.then(y => x + y))
-
+--
 -- async function addM(mx, my) {
 --   const x = await mx
 --   const y = await my
