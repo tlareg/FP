@@ -3,6 +3,8 @@
 ; run examples
 ; $ planck clojure_examples.cljs
 
+; http://elbenshira.com/p/clojure-primer-js/
+
 ;; (println "Hello World 1")
 
 ;; ((fn [message] (println message)) ; Operation
